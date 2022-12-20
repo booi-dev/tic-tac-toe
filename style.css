@@ -1,0 +1,46 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --clr-primary: white;
+  --clr-secondary: #9d8099;
+
+  --clr-border: #171216a5;
+}
+
+body {
+  display: grid;
+  place-items: center;
+  padding: 3em;
+  font-family: sans-serif;
+  /* background-color: aqua; */
+}
+
+.title {
+  margin-bottom: 1em;
+}
+
+.container {
+  display: grid;
+  grid-template: 1fr 1fr 1fr / 1fr 1fr 1fr;
+  /* background-color: aqua; */
+  /* gap: 10; */
+}
+
+.field {
+  width: 7em;
+  height: 7em;
+  border-bottom: 2px solid var(--clr-border);
+  border-right: 2px solid var(--clr-border);
+}
+
+.field.no-bb {
+  border-bottom: none;
+}
+
+.field.no-br {
+  border-right: none;
+}
