@@ -36,7 +36,7 @@ body {
   grid-template-columns: repeat(3, auto);
   place-content: center;
   place-items: center;
-  cursor: none;
+  /* cursor: none; */
 }
 
 .cell {

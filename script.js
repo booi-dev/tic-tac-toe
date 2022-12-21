@@ -14,23 +14,17 @@ const WINNING_COMBINATIONS = [
     [0, 4, 8],
     [2, 4, 6]
 ]
+let combinationWinner;
 let xTurn;
 
 const elements = {
     cursorX: document.querySelector(".custom-cursor.x"),
     cursorO: document.querySelector(".custom-cursor.o"),
-    board: document.querySelector("#board")
-}
-
-const gameboard = {
-    cell: document.querySelectorAll(".cell"),
-    cellArr() {
-        return Array.from(this.cell);
-    }
+    board: document.querySelector("#board"),
+    gameboard: document.querySelectorAll(".cell")
 }
 
 // function cursor rendering
-
 
 const removeCursor = function (condition) {
     if (condition === 'x') {
@@ -54,7 +48,8 @@ const createCursor = function () {
     }
 }
 
-const positionElement = function (e) {
+const getCursor = function (e) {
+    createCursor()
     const mouseX = e.clientX;
     const mouseY = e.clientY;
     if (xTurn) {
@@ -64,18 +59,27 @@ const positionElement = function (e) {
     }
 }
 
-// mouse events
-board.addEventListener('mousemove', (e) => {
-    createCursor()
-    positionElement(e)
-})
+// const loseCursor = function (e) {
 
-board.addEventListener('mouseleave', () => {
-    removeCursor('both')
-})
+// }
+
+// mouse events
+
+const cursorEventHandler = function (state) {
+    if (state === true) {
+        board.addEventListener('mousemove', getCursor)
+        board.addEventListener('mouseleave', () => {
+            removeCursor('both')
+        })
+    }
+
+    if (state === false) {
+        board.removeEventListener('mousemove', getCursor)
+        removeCursor('both')
+    }
+}
 
 //
-
 const placeMark = function (cell, currentPlayer) {
     cell.classList.add(currentPlayer)
 }
@@ -87,9 +91,16 @@ const swapTurn = function () {
 const checkWin = function (currentPlayer) {
     return WINNING_COMBINATIONS.some((combinatin) => {
         return combinatin.every(index => {
-            return gameboard.cell[index].classList.contains(currentPlayer)
+            combinationWinner = combinatin;
+            return elements.gameboard[index].classList.contains(currentPlayer)
         })
     })
+}
+
+const gameEnd = function (currentPlayer) {
+    cursorEventHandler(false)
+    clickEventHandler(false)
+    console.log(`${currentPlayer} win the dame`)
 }
 
 const clickEvenHandler = function (e) {
@@ -98,22 +109,31 @@ const clickEvenHandler = function (e) {
     placeMark(cell, currentPlayer)
 
     if (checkWin(currentPlayer)) {
-        console.log(`${currentPlayer} win`)
+        gameEnd(currentPlayer)
+    } else {
+        swapTurn()
     }
-    swapTurn()
 }
 
-function bindEventHandler() {
-    gameboard.cell.forEach((each) => {
-        each.addEventListener('click', clickEvenHandler, { once: true })
-    })
+function clickEventHandler(state) {
+    if (state === true) {
+        elements.gameboard.forEach((each) => {
+            each.addEventListener('click', clickEvenHandler, { once: true })
+        })
+    }
+    if (state === false) {
+        elements.gameboard.forEach((each) => {
+            each.removeEventListener('click', clickEvenHandler)
+        })
+    }
 }
 
 // game init
 
 const startGame = function () {
-    xTurn = false;
-    bindEventHandler()
+    xTurn = true;
+    cursorEventHandler(true)
+    clickEventHandler(true)
 }
 
 startGame()
