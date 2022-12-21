@@ -211,7 +211,19 @@ a {
 }
 
 .restart-btn img {
-  width: 25px;
+  animation: imgAnime 0.7s infinite alternate;
+}
+
+@keyframes imgAnime {
+  0% {
+    width: 20px;
+  }
+  50% {
+    width: 25px;
+  }
+  100% {
+    width: 25px;
+  }
 }
 
 .winner-player {
