@@ -8,6 +8,8 @@
 
 :root {
   --clr-primary: #eddbdb;
+  --clr-acc: #0ff80b;
+
   --cell-size: 6em;
   --mark-size: calc(var(--cell-size) * 0.55);
 
@@ -179,7 +181,7 @@ a {
 }
 
 .cell.win {
-  background-color: rgb(15, 248, 11);
+  background-color: var(--clr-acc);
 }
 
 .msg-div,
@@ -208,22 +210,23 @@ a {
   padding: 0.2em 0.4em;
   width: min-content;
   margin: auto;
-  transform-origin: center;
+  background-color: var(--clr-acc);
 }
 
 .restart-btn img {
-  animation: imgAnime 0.7s infinite alternate;
+  width: 18px;
+  animation: imgAnime 0.6s infinite alternate;
 }
 
 @keyframes imgAnime {
   0% {
-    width: 20px;
+    scale: 0.6;
   }
   50% {
-    width: 25px;
+    scale: 1.2;
   }
   100% {
-    width: 25px;
+    scale: 1.2;
   }
 }
 
@@ -240,12 +243,12 @@ a {
 
 .winner-player .x::before,
 .winner-player .x::after {
-  background-color: rgb(15, 248, 11);
+  background-color: var(--clr-acc);
   translate: 10px 19px;
 }
 
 .winner-player .o {
-  border: var(--cursor-width) solid rgb(15, 248, 11);
+  border: var(--cursor-width) solid var(--clr-acc);
   translate: 10% 5%;
   margin-right: 0.5rem;
 }
