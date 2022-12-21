@@ -132,7 +132,7 @@ const updateMsg = function (currentPlayer, state) {
 
 const gameEnd = function (currentPlayer, state) {
 
-    if (state === 'wind') {
+    if (state === 'win') {
         cursorEventHandler(false)
         bindEvent(false)
     }
