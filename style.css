@@ -8,15 +8,15 @@
 
 :root {
   --clr-primary: #eddbdb;
-  --cell-size: 7em;
+  --cell-size: 6em;
   --mark-size: calc(var(--cell-size) * 0.55);
 
   --cursor-size: 2em;
-  /* --cursor-width: calc(var(--cursor-size) * 0.15);
-  --cursor-half: calc(((var(--cursor-size) * 0.5) - var(--cursor-width))); */
-
   --cursor-width: 0.3em;
   --cursor-half: 1em;
+
+  /* --cursor-width: calc(var(--cursor-size) * 0.15);
+  --cursor-half: calc(((var(--cursor-size) * 0.5) - var(--cursor-width))); */
 }
 
 body {
@@ -36,9 +36,7 @@ body {
   grid-template-columns: repeat(3, auto);
   place-content: center;
   place-items: center;
-  /* cursor: none; */
-  padding: 3em;
-  background-color: var(--clr-primary);
+  cursor: none;
 }
 
 .cell {

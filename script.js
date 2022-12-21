@@ -4,6 +4,16 @@
 
 const X_CLASS = 'x';
 const CIRCLE_CLASS = 'o';
+const WINNING_COMBINATIONS = [
+    [0, 1, 2],
+    [3, 4, 5],
+    [6, 7, 8],
+    [0, 3, 6],
+    [1, 4, 7],
+    [2, 5, 8],
+    [0, 4, 8],
+    [2, 4, 6]
+]
 let xTurn;
 
 const elements = {
@@ -37,14 +47,20 @@ function bindEventHandler() {
 
 function clickEvenHandler(e) {
     let cell = e.target;
-    const currentClass = xTurn ? X_CLASS : CIRCLE_CLASS;
-    placeMark(cell, currentClass)
+    const currentPlayer = xTurn ? X_CLASS : CIRCLE_CLASS;
+    placeMark(cell, currentPlayer)
     swapTurn()
 }
 
-function placeMark(cell, cclass) {
-    cell.classList.add(cclass)
+function placeMark(cell, currentPlayer) {
+    cell.classList.add(currentPlayer)
 }
+
+function checkWin() {
+
+}
+
+
 
 function swapTurn() {
     xTurn = !xTurn;
