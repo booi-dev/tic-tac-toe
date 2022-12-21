@@ -25,6 +25,11 @@ body {
   font-family: sans-serif;
 }
 
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
 .containter {
   display: flex;
   align-items: center;
@@ -222,12 +227,28 @@ body {
 
 .winner-player .x::before,
 .winner-player .x::after {
-  background-color: black;
+  background-color: rgb(15, 248, 11);
   translate: 10px 19px;
 }
 
 .winner-player .o {
-  border: var(--cursor-width) solid rgb(0, 0, 0);
+  border: var(--cursor-width) solid rgb(15, 248, 11);
   translate: 10% 5%;
   margin-right: 0.5rem;
+}
+
+.github-signature {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  right: 0;
+  left: 0;
+  bottom: 10px;
+  font-size: 0.5rem;
+}
+
+.github-signature img {
+  width: 1.5rem;
+  margin-left: 5px;
 }

@@ -1,9 +1,3 @@
-// cache DOM
-// bind events
-// mark func
-// restart function
-// draw function
-
 const X_CLASS = 'x';
 const O_CLASS = 'o';
 const WINNING_COMBINATIONS = [
