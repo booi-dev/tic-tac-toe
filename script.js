@@ -25,7 +25,7 @@ const elements = {
     board: document.querySelector("#board"),
     gameboard: document.querySelectorAll(".cell"),
     msgDiv: document.querySelector(".msg-div"),
-    restartDiv: document.querySelector(".restart-btn")
+    restartBtn: document.querySelector(".restart-btn")
 }
 
 // function cursor rendering
@@ -103,31 +103,27 @@ const winTransition = function (combinationCells) {
     })
 }
 
-const gameEndMsg = function (state) {
-    elements.msgDiv.classList.add('show')
-    elements.restartDiv.classList.add('show')
+const gameEndMsg = function () {
+    elements.msgDiv.classList.toggle('show')
+    elements.restartBtn.classList.toggle('show')
 }
 
-const updateMsg = function (state) {
+const updateMsg = function (currentPlayer, state) {
     let winnerPlayereDiv = elements.msgDiv.firstChild.nextSibling
+    if (currentPlayer === 'x') winnerPlayereDiv.childNodes[1].classList.add('x')
+    else if (currentPlayer === 'o') winnerPlayereDiv.childNodes[1].classList.add('o')
 
-    if (state === 'x') {
-        winnerPlayereDiv.childNodes[1].classList.add('x')
-    } else if (state === 'o') {
-        winnerPlayereDiv.childNodes[1].classList.add('o')
-    }
+    if (state === 'restart') winnerPlayereDiv.childNodes[1].setAttribute('class', '')
+
 
     winnerPlayereDiv.childNodes[2].nextSibling.textContent = 'win'
-
-    console.log(winnerPlayereDiv.childNodes[1])
-    console.log(winnerPlayereDiv.childNodes[2].nextSibling)
 }
 
 const gameEnd = function (currentPlayer) {
     cursorEventHandler(false)
     bindEvent(false)
-    gameEndMsg(currentPlayer)
-    updateMsg(currentPlayer)
+    gameEndMsg()
+    updateMsg(currentPlayer, "win")
 }
 
 const clickEvenHandler = function (e) {
@@ -165,3 +161,15 @@ const startGame = function () {
 }
 
 startGame()
+
+const restart = function resetEverything() {
+    elements.gameboard.forEach((cell) => {
+        cell.setAttribute('class', 'cell')
+        console.log('restart')
+    })
+    updateMsg('', 'restart')
+    gameEndMsg()
+    startGame()
+}
+
+elements.restartBtn.addEventListener('click', restart)
