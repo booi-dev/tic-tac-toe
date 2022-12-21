@@ -59,10 +59,6 @@ const getCursor = function (e) {
     }
 }
 
-// const loseCursor = function (e) {
-
-// }
-
 // mouse events
 
 const cursorEventHandler = function (state) {
@@ -97,6 +93,14 @@ const checkWin = function (currentPlayer) {
     })
 }
 
+
+const winAnime = function (combinationCells) {
+    combinationCells.forEach((index) => {
+        elements.gameboard[index].classList.add('win')
+    })
+}
+
+
 const gameEnd = function (currentPlayer) {
     cursorEventHandler(false)
     clickEventHandler(false)
@@ -109,6 +113,7 @@ const clickEvenHandler = function (e) {
     placeMark(cell, currentPlayer)
 
     if (checkWin(currentPlayer)) {
+        winAnime(combinationWinner)
         gameEnd(currentPlayer)
     } else {
         swapTurn()

@@ -115,7 +115,6 @@ body {
 .custom-cursor {
   position: fixed;
   width: var(--cursor-size);
-  /* background-color: aqua; */
 }
 
 .custom-cursor.x {
@@ -158,4 +157,16 @@ body {
   border: var(--cursor-width) solid rgba(0, 0, 0, 0.626);
   border-radius: 50%;
   translate: -50% -50%;
+}
+
+/* transition  */
+
+.cell {
+  transition-property: background-color;
+  transition-duration: 1s;
+  transition-timing-function: ease-in;
+}
+
+.cell.win {
+  background-color: rgb(15, 248, 11);
 }
