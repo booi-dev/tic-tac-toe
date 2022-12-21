@@ -29,64 +29,10 @@ const gameboard = {
     }
 }
 
-//
-
-startGame()
-
-function startGame() {
-    xTurn = false;
-    bindEventHandler()
-    // swapTurn()
-}
-
-function bindEventHandler() {
-    gameboard.cellArr().map((each) => {
-        each.addEventListener('click', clickEvenHandler, { once: true })
-    })
-}
-
-function clickEvenHandler(e) {
-    let cell = e.target;
-    const currentPlayer = xTurn ? X_CLASS : CIRCLE_CLASS;
-    placeMark(cell, currentPlayer)
-    swapTurn()
-}
-
-function placeMark(cell, currentPlayer) {
-    cell.classList.add(currentPlayer)
-}
-
-function checkWin() {
-
-}
+// function cursor rendering
 
 
-
-function swapTurn() {
-    xTurn = !xTurn;
-}
-
-// function cursorRender() {
-board.addEventListener('mousemove', (e) => {
-    createCursor()
-    positionElement(e)
-})
-
-board.addEventListener('mouseleave', () => {
-    removeCursor('both')
-})
-
-function createCursor() {
-    if (xTurn) {
-        elements.cursorX.classList.add('show')
-        removeCursor('o')
-    } else {
-        elements.cursorO.classList.add('show')
-        removeCursor('x')
-    }
-}
-
-function removeCursor(condition) {
+const removeCursor = function (condition) {
     if (condition === 'x') {
         elements.cursorX.classList.remove('show')
 
@@ -98,7 +44,17 @@ function removeCursor(condition) {
     }
 }
 
-function positionElement(e) {
+const createCursor = function () {
+    if (xTurn) {
+        elements.cursorX.classList.add('show')
+        removeCursor('o')
+    } else {
+        elements.cursorO.classList.add('show')
+        removeCursor('x')
+    }
+}
+
+const positionElement = function (e) {
     const mouseX = e.clientX;
     const mouseY = e.clientY;
     if (xTurn) {
@@ -108,3 +64,55 @@ function positionElement(e) {
     }
 }
 
+// mouse events
+board.addEventListener('mousemove', (e) => {
+    createCursor()
+    positionElement(e)
+})
+
+board.addEventListener('mouseleave', () => {
+    removeCursor('both')
+})
+
+
+//
+
+const placeMark = function (cell, currentPlayer) {
+    cell.classList.add(currentPlayer)
+}
+
+const swapTurn = function () {
+    xTurn = !xTurn;
+}
+
+const clickEvenHandler = function (e) {
+    let cell = e.target;
+    const currentPlayer = xTurn ? X_CLASS : CIRCLE_CLASS;
+    placeMark(cell, currentPlayer)
+    swapTurn()
+}
+
+function bindEventHandler() {
+    gameboard.cellArr().map((each) => {
+        each.addEventListener('click', clickEvenHandler, { once: true })
+    })
+}
+
+// function swapTurn() {
+//     xTurn = !xTurn;
+// }
+
+const checkWin = function (currentPlayer) {
+    confirm.log(gameboard.cellArr())
+}
+
+// game init
+
+const startGame = function () {
+    xTurn = false;
+    bindEventHandler()
+    // checkWin(currentPlayer)
+    // swapTurn()
+}
+
+startGame()
