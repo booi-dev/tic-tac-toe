@@ -194,12 +194,12 @@ body {
 }
 
 .msg-div {
-  top: 3rem;
+  top: 4rem;
   font-size: 1rem;
 }
 
 .restart-btn {
-  bottom: 3rem;
+  bottom: 4rem;
   padding: 0.2em 0.4em;
   width: min-content;
   margin: auto;

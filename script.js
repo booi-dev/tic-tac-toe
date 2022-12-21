@@ -5,7 +5,7 @@
 // draw function
 
 const X_CLASS = 'x';
-const CIRCLE_CLASS = 'o';
+const O_CLASS = 'o';
 const WINNING_COMBINATIONS = [
     [0, 1, 2],
     [3, 4, 5],
@@ -97,6 +97,12 @@ const checkWin = function (currentPlayer) {
     })
 }
 
+const checkDraw = function () {
+    return [...elements.gameboard].every((cell) => {
+        return cell.classList.contains(X_CLASS) || cell.classList.contains(O_CLASS)
+    })
+}
+
 const winTransition = function (combinationCells) {
     combinationCells.forEach((index) => {
         elements.gameboard[index].classList.add('win')
@@ -113,27 +119,37 @@ const updateMsg = function (currentPlayer, state) {
     if (currentPlayer === 'x') winnerPlayereDiv.childNodes[1].classList.add('x')
     else if (currentPlayer === 'o') winnerPlayereDiv.childNodes[1].classList.add('o')
 
-    if (state === 'restart') winnerPlayereDiv.childNodes[1].setAttribute('class', '')
+    if (state === 'restart') winnerPlayereDiv.childNodes[1].className = ''
+
+    if (state === 'draw') {
+        winnerPlayereDiv.childNodes[2].nextSibling.textContent = 'draw'
+    } else {
+        winnerPlayereDiv.childNodes[2].nextSibling.textContent = 'win'
+    }
 
 
-    winnerPlayereDiv.childNodes[2].nextSibling.textContent = 'win'
 }
 
-const gameEnd = function (currentPlayer) {
-    cursorEventHandler(false)
-    bindEvent(false)
+const gameEnd = function (currentPlayer, state) {
+
+    if (state === 'wind') {
+        cursorEventHandler(false)
+        bindEvent(false)
+    }
     gameEndMsg()
-    updateMsg(currentPlayer, "win")
+    updateMsg(currentPlayer, state)
 }
 
 const clickEvenHandler = function (e) {
     let cell = e.target;
-    const currentPlayer = xTurn ? X_CLASS : CIRCLE_CLASS;
+    const currentPlayer = xTurn ? X_CLASS : O_CLASS;
     placeMark(cell, currentPlayer)
 
     if (checkWin(currentPlayer)) {
         winTransition(combinationWinner)
-        gameEnd(currentPlayer)
+        gameEnd(currentPlayer, 'win')
+    } else if (checkDraw()) {
+        gameEnd('', 'draw')
     } else {
         swapTurn()
     }
@@ -164,11 +180,9 @@ startGame()
 
 const restart = function resetEverything() {
     elements.gameboard.forEach((cell) => {
-        cell.setAttribute('class', 'cell')
-        console.log('restart')
+        cell.className = 'cell'
     })
-    updateMsg('', 'restart')
-    gameEndMsg()
+    gameEnd('', 'restart')
     startGame()
 }
 
