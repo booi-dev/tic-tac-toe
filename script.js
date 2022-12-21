@@ -22,15 +22,10 @@ const elements = {
     restartBtn: document.querySelector(".restart-btn")
 }
 
-// function cursor rendering
-
 const removeCursor = function (condition) {
-    if (condition === 'x') {
-        elements.cursorX.classList.remove('show')
-
-    } if (condition === 'o') {
-        elements.cursorO.classList.remove('show')
-    } if (condition === 'both') {
+    if (condition === 'x') elements.cursorX.classList.remove('show')
+    if (condition === 'o') elements.cursorO.classList.remove('show')
+    if (condition === 'both') {
         elements.cursorX.classList.remove('show')
         elements.cursorO.classList.remove('show')
     }
@@ -50,14 +45,8 @@ const getCursor = function (e) {
     createCursor()
     const mouseX = e.clientX;
     const mouseY = e.clientY;
-    if (xTurn) {
-        elements.cursorX.style.transform = `translate3d(${mouseX}px, ${mouseY}px, 10px)`;
-    } else {
-        elements.cursorO.style.transform = `translate3d(${mouseX}px, ${mouseY}px, 10px)`;
-    }
+    if (xTurn) elements.cursorX.style.transform = `translate3d(${mouseX}px, ${mouseY}px, 10px)`; else elements.cursorO.style.transform = `translate3d(${mouseX}px, ${mouseY}px, 10px)`;
 }
-
-// mouse events
 
 const cursorEventHandler = function (state) {
     if (state === true) {
@@ -66,14 +55,12 @@ const cursorEventHandler = function (state) {
             removeCursor('both')
         })
     }
-
     if (state === false) {
         board.removeEventListener('mousemove', getCursor)
         removeCursor('both')
     }
 }
 
-//
 const placeMark = function (cell, currentPlayer) {
     cell.classList.add(currentPlayer)
 }
@@ -115,18 +102,12 @@ const updateMsg = function (currentPlayer, state) {
 
     if (state === 'restart') winnerPlayereDiv.childNodes[1].className = ''
 
-    if (state === 'draw') {
-        winnerPlayereDiv.childNodes[2].nextSibling.textContent = 'draw'
-    } else {
-        winnerPlayereDiv.childNodes[2].nextSibling.textContent = 'win'
-    }
-
-
+    if (state === 'draw') winnerPlayereDiv.childNodes[2].nextSibling.textContent = 'draw'
+    else winnerPlayereDiv.childNodes[2].nextSibling.textContent = 'win'
 }
 
 const gameEnd = function (currentPlayer, state) {
-
-    if (state === 'win') {
+    if ((state === 'win') || (state === 'draw')) {
         cursorEventHandler(false)
         bindEvent(false)
     }
@@ -142,11 +123,8 @@ const clickEvenHandler = function (e) {
     if (checkWin(currentPlayer)) {
         winTransition(combinationWinner)
         gameEnd(currentPlayer, 'win')
-    } else if (checkDraw()) {
-        gameEnd('', 'draw')
-    } else {
-        swapTurn()
-    }
+    } else if (checkDraw()) gameEnd('', 'draw')
+    else swapTurn()
 }
 
 function bindEvent(state) {
@@ -161,8 +139,6 @@ function bindEvent(state) {
         })
     }
 }
-
-// game init
 
 const startGame = function () {
     xTurn = true;

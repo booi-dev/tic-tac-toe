@@ -208,6 +208,7 @@ a {
   padding: 0.2em 0.4em;
   width: min-content;
   margin: auto;
+  transform-origin: center;
 }
 
 .restart-btn img {
