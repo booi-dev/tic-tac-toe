@@ -74,7 +74,6 @@ board.addEventListener('mouseleave', () => {
     removeCursor('both')
 })
 
-
 //
 
 const placeMark = function (cell, currentPlayer) {
@@ -85,25 +84,29 @@ const swapTurn = function () {
     xTurn = !xTurn;
 }
 
+const checkWin = function (currentPlayer) {
+    return WINNING_COMBINATIONS.some((combinatin) => {
+        return combinatin.every(index => {
+            return gameboard.cell[index].classList.contains(currentPlayer)
+        })
+    })
+}
+
 const clickEvenHandler = function (e) {
     let cell = e.target;
     const currentPlayer = xTurn ? X_CLASS : CIRCLE_CLASS;
     placeMark(cell, currentPlayer)
+
+    if (checkWin(currentPlayer)) {
+        console.log(`${currentPlayer} win`)
+    }
     swapTurn()
 }
 
 function bindEventHandler() {
-    gameboard.cellArr().map((each) => {
+    gameboard.cell.forEach((each) => {
         each.addEventListener('click', clickEvenHandler, { once: true })
     })
-}
-
-// function swapTurn() {
-//     xTurn = !xTurn;
-// }
-
-const checkWin = function (currentPlayer) {
-    confirm.log(gameboard.cellArr())
 }
 
 // game init
@@ -111,8 +114,6 @@ const checkWin = function (currentPlayer) {
 const startGame = function () {
     xTurn = false;
     bindEventHandler()
-    // checkWin(currentPlayer)
-    // swapTurn()
 }
 
 startGame()
