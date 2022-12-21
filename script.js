@@ -1,6 +1,8 @@
 // cache DOM
 // bind events
 // mark func
+// restart function
+// draw function
 
 const X_CLASS = 'x';
 const CIRCLE_CLASS = 'o';
@@ -21,7 +23,9 @@ const elements = {
     cursorX: document.querySelector(".custom-cursor.x"),
     cursorO: document.querySelector(".custom-cursor.o"),
     board: document.querySelector("#board"),
-    gameboard: document.querySelectorAll(".cell")
+    gameboard: document.querySelectorAll(".cell"),
+    msgDiv: document.querySelector(".msg-div"),
+    restartDiv: document.querySelector(".restart-btn")
 }
 
 // function cursor rendering
@@ -93,18 +97,37 @@ const checkWin = function (currentPlayer) {
     })
 }
 
-
-const winAnime = function (combinationCells) {
+const winTransition = function (combinationCells) {
     combinationCells.forEach((index) => {
         elements.gameboard[index].classList.add('win')
     })
 }
 
+const gameEndMsg = function (state) {
+    elements.msgDiv.classList.add('show')
+    elements.restartDiv.classList.add('show')
+}
+
+const updateMsg = function (state) {
+    let winnerPlayereDiv = elements.msgDiv.firstChild.nextSibling
+
+    if (state === 'x') {
+        winnerPlayereDiv.childNodes[1].classList.add('x')
+    } else if (state === 'o') {
+        winnerPlayereDiv.childNodes[1].classList.add('o')
+    }
+
+    winnerPlayereDiv.childNodes[2].nextSibling.textContent = 'win'
+
+    console.log(winnerPlayereDiv.childNodes[1])
+    console.log(winnerPlayereDiv.childNodes[2].nextSibling)
+}
 
 const gameEnd = function (currentPlayer) {
     cursorEventHandler(false)
-    clickEventHandler(false)
-    console.log(`${currentPlayer} win the dame`)
+    bindEvent(false)
+    gameEndMsg(currentPlayer)
+    updateMsg(currentPlayer)
 }
 
 const clickEvenHandler = function (e) {
@@ -113,14 +136,14 @@ const clickEvenHandler = function (e) {
     placeMark(cell, currentPlayer)
 
     if (checkWin(currentPlayer)) {
-        winAnime(combinationWinner)
+        winTransition(combinationWinner)
         gameEnd(currentPlayer)
     } else {
         swapTurn()
     }
 }
 
-function clickEventHandler(state) {
+function bindEvent(state) {
     if (state === true) {
         elements.gameboard.forEach((each) => {
             each.addEventListener('click', clickEvenHandler, { once: true })
@@ -138,7 +161,7 @@ function clickEventHandler(state) {
 const startGame = function () {
     xTurn = true;
     cursorEventHandler(true)
-    clickEventHandler(true)
+    bindEvent(true)
 }
 
 startGame()

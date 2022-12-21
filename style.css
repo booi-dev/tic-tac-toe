@@ -22,6 +22,7 @@
 body {
   margin: 0;
   height: 100vh;
+  font-family: sans-serif;
 }
 
 .containter {
@@ -49,7 +50,7 @@ body {
   align-items: center;
   position: relative;
 
-  /* background-color: var(--clr-primary); */
+  /* transition: background-color, 1s, ease-in; */
 }
 
 .cell.x,
@@ -134,7 +135,9 @@ body {
 }
 
 .custom-cursor.x::before,
-.custom-cursor.x::after {
+.custom-cursor.x::after,
+.winner-player .x::before,
+.winner-player .x::after {
   content: " ";
   position: absolute;
   width: var(--cursor-width);
@@ -143,15 +146,18 @@ body {
   background-color: rgba(0, 0, 0, 0.626);
 }
 
-.custom-cursor.x::before {
+.custom-cursor.x::before,
+.winner-player .x::before {
   rotate: 45deg;
 }
 
-.custom-cursor.x::after {
+.custom-cursor.x::after,
+.winner-player .x::after {
   rotate: -45deg;
 }
 
-.custom-cursor.o {
+.custom-cursor.o,
+.winner-player .o {
   width: var(--cursor-size);
   height: var(--cursor-size);
   border: var(--cursor-width) solid rgba(0, 0, 0, 0.626);
@@ -169,4 +175,59 @@ body {
 
 .cell.win {
   background-color: rgb(15, 248, 11);
+}
+
+.msg-div,
+.restart-btn {
+  position: fixed;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 1.5s;
+}
+
+.msg-div.show,
+.restart-btn.show {
+  opacity: 1;
+}
+
+.msg-div {
+  top: 3rem;
+  font-size: 1rem;
+}
+
+.restart-btn {
+  bottom: 3rem;
+  padding: 0.2em 0.4em;
+  width: min-content;
+  margin: auto;
+}
+
+.restart-btn img {
+  width: 25px;
+}
+
+.winner-player {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.winner-player .x {
+  margin-right: 2em;
+}
+
+.winner-player .x::before,
+.winner-player .x::after {
+  background-color: black;
+  translate: 10px 19px;
+}
+
+.winner-player .o {
+  border: var(--cursor-width) solid rgb(0, 0, 0);
+  translate: 10% 5%;
+  margin-right: 0.5rem;
 }
