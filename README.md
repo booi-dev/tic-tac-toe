@@ -3,4 +3,4 @@ tic-tac-toe
 
 
 veiw live demo
-https://booimangang.github.io/tic-tac-toe/
+https://booi-dev.github.io/tic-tac-toe/
